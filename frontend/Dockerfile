@@ -1,16 +1,14 @@
-FROM maven:3.9.9-eclipse-temurin-17 AS build
+FROM node:20-alpine AS build
 
 WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
 
-COPY src ./src
-RUN mvn clean package -DskipTests
+COPY package*.json ./
+RUN npm install --omit=optional --legacy-peer-deps
 
-FROM eclipse-temurin:17-jre-alpine
+COPY . .
+RUN npx ng build --configuration production
 
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+EXPOSE 80
