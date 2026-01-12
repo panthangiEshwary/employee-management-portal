@@ -23,17 +23,21 @@ jobs:
       # Frontend Build (Angular)
       # ==============================
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      - name: Clean npm cache
+        working-directory: frontend
+        run: npm cache clean --force
+
       - name: Install frontend dependencies
         working-directory: frontend
-        run: npm install
+        run: npm install --omit=optional
 
       - name: Build frontend (production)
         working-directory: frontend
-        run: npx ng build --configuration production
+        run: node node_modules/@angular/cli/bin/ng build --configuration production
 
       # ==============================
       # Backend Build (Spring Boot)
