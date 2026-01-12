@@ -31,17 +31,17 @@ jobs:
         working-directory: frontend
         run: npm cache clean --force
 
-      - name: Remove Windows lockfile
+      - name: Remove lockfile
         working-directory: frontend
         run: rm -f package-lock.json
 
       - name: Install frontend dependencies (Linux-safe)
         working-directory: frontend
-        run: npm install --omit=optional
+        run: npm install --omit=optional --legacy-peer-deps
 
       - name: Build frontend (production)
         working-directory: frontend
-        run: node node_modules/@angular/cli/bin/ng build --configuration production
+        run: npx ng build --configuration production
 
       # ==============================
       # Backend Build (Spring Boot)
