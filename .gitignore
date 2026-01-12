@@ -1,0 +1,43 @@
+# ===== OS =====
+.DS_Store
+Thumbs.db
+$RECYCLE.BIN/
+System Volume Information/
+
+# ===== Node / Angular =====
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-error.log*
+
+# ===== Java / Spring Boot =====
+target/
+*.class
+*.log
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.iml
+
+# ===== Environment & Secrets =====
+.env
+*.pem
+*.ppk
+*.key
+
+# ===== Archives =====
+*.zip
+*.tar
+*.gz
+
+# ===== User folders (ABSOLUTELY IGNORE) =====
+Desktop/
+Documents/
+Downloads/
+Music/
+Pictures/
+Videos/
+OneDrive/
+

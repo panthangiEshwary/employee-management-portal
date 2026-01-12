@@ -1,0 +1,82 @@
+<div class="admin-page">
+
+  <h2>Admin Dashboard</h2>
+
+  <div class="filters">
+    <select [(ngModel)]="selectedDepartment">
+      <option value="">All Departments</option>
+      <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+    </select>
+
+    <select [(ngModel)]="selectedMonth">
+      <option value="">All Months</option>
+      <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+    </select>
+
+    <select [(ngModel)]="selectedYear">
+      <option value="">All Years</option>
+      <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+    </select>
+  </div>
+
+  <!-- ✅ FORCE TABLE RENDER USING employees -->
+  <table *ngIf="employees.length > 0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Department</th>
+        <th>Working Days</th>
+        <th>Availability %</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- ✅ USE filteredEmployees() ONLY HERE -->
+      <tr *ngFor="let emp of filteredEmployees()">
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.month }}</td>
+        <td>{{ emp.year }}</td>
+
+        <td>
+          <span *ngIf="editingId !== emp.id">{{ emp.department }}</span>
+          <select *ngIf="editingId === emp.id"
+                  [(ngModel)]="editDepartment">
+            <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+          </select>
+        </td>
+
+        <td>
+          <span *ngIf="editingId !== emp.id">{{ emp.workingDays }}</span>
+          <input *ngIf="editingId === emp.id"
+                 type="number"
+                 [(ngModel)]="editWorkingDays"
+                 min="0" />
+        </td>
+
+        <td>{{ emp.availability }}%</td>
+
+        <td>
+          <ng-container *ngIf="editingId !== emp.id">
+            <button class="edit-btn" (click)="startEdit(emp)">Edit</button>
+            <button class="danger" (click)="deleteEmployee(emp.id)">Delete</button>
+          </ng-container>
+
+          <ng-container *ngIf="editingId === emp.id">
+            <button class="save-btn" (click)="saveEdit(emp)">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ✅ EMPTY STATE -->
+  <p *ngIf="employees.length === 0">No data available</p>
+
+  <button class="logout-btn" (click)="logout()">Logout</button>
+</div>

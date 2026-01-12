@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: employee-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: employee_db
+      MYSQL_USER: employee_user
+      MYSQL_PASSWORD: employee@123
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-net
+
+  backend:
+    image: ghcr.io/panthangieshwary/employee-backend:latest
+    container_name: employee-backend
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/employee_db
+      SPRING_DATASOURCE_USERNAME: employee_user
+      SPRING_DATASOURCE_PASSWORD: employee@123
+    ports:
+      - "8080:8080"
+    networks:
+      - app-net
+
+  frontend:
+    image: ghcr.io/panthangieshwary/employee-frontend:latest
+    container_name: employee-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - app-net
+
+networks:
+  app-net:
+
+volumes:
+  mysql-data:

@@ -1,0 +1,73 @@
+<div class="page">
+  <div class="dashboard">
+
+    <h2>Employee Dashboard</h2>
+
+    <!-- User Info -->
+<div class="user-info" *ngIf="user">
+  <p><strong>Name:</strong> {{ user.name }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+</div>
+
+    <!-- DEPARTMENT -->
+    <label>Department</label>
+    <select [(ngModel)]="selectedDepartment">
+      <option value="">Select Department</option>
+      <option *ngFor="let d of departments" [value]="d">
+        {{ d }}
+      </option>
+    </select>
+
+    <!-- MONTH & YEAR -->
+    <div class="row">
+      <div>
+        <label>Month</label>
+        <select [(ngModel)]="selectedMonth" (change)="onMonthOrYearChange()">
+          <option [ngValue]="null">Select Month</option>
+          <option *ngFor="let m of months" [ngValue]="m.value">
+            {{ m.label }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label>Year</label>
+        <select [(ngModel)]="selectedYear" (change)="onMonthOrYearChange()">
+          <option [ngValue]="null">Select Year</option>
+          <option *ngFor="let y of years" [ngValue]="y">
+            {{ y }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- DAYS -->
+    <label>Days in Month</label>
+    <input [value]="daysInMonth" readonly>
+
+    <label>Working Days</label>
+    <input
+      type="number"
+      [(ngModel)]="workingDays"
+      [max]="daysInMonth"
+    >
+
+    <!-- SUBMIT -->
+    <button
+      class="submit-btn primary-btn"
+      (click)="submit()"
+      [disabled]="
+        !selectedDepartment ||
+        selectedMonth === null ||
+        selectedYear === null ||
+        workingDays <= 0 ||
+        workingDays > daysInMonth
+      ">
+      Submit
+    </button>
+
+    <!-- LOGOUT -->
+    <button class="logout-btn" (click)="logout()">Logout</button>
+
+  </div>
+</div>

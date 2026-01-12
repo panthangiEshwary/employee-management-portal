@@ -1,0 +1,77 @@
+<div class="page">
+  <div class="portal-card">
+
+    <h1>Employee Portal</h1>
+    <p class="subtitle">HRMS Access Management</p>
+
+    <!-- 🔐 LOGIN FORM -->
+    <form *ngIf="!showReset" (ngSubmit)="onLogin()">
+
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+
+      <button type="submit" class="primary-btn">
+        Login
+      </button>
+
+      <div class="forgot-wrapper">
+        <a class="forgot-link" (click)="forgotPassword()">
+          Forgot password?
+        </a>
+      </div>
+
+    </form>
+
+    <!-- 🔁 RESET PASSWORD -->
+    <div *ngIf="showReset">
+
+      <h3>Reset Password</h3>
+
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="resetEmail"
+        name="resetEmail"
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="New Password"
+        [(ngModel)]="newPassword"
+        name="newPassword"
+        required
+      />
+
+      <button
+        type="button"
+        class="primary-btn"
+        (click)="resetPassword()">
+        Update Password
+      </button>
+
+      <div class="forgot-wrapper">
+        <a class="forgot-link" (click)="cancelReset()">Cancel</a>
+      </div>
+
+    </div>
+
+    <button class="back-btn-bottom" type="button" (click)="goBack()">
+      ← Back
+    </button>
+
+  </div>
+</div>
