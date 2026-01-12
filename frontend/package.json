@@ -36,7 +36,6 @@
     "@angular/build": "^21.0.4",
     "@angular/cli": "^21.0.4",
     "@angular/compiler-cli": "^21.0.0",
-    "@rollup/rollup-win32-x64-msvc": "^4.55.1",
     "jasmine-core": "^5.13.0",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
