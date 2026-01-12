@@ -31,7 +31,11 @@ jobs:
         working-directory: frontend
         run: npm cache clean --force
 
-      - name: Install frontend dependencies
+      - name: Remove Windows lockfile
+        working-directory: frontend
+        run: rm -f package-lock.json
+
+      - name: Install frontend dependencies (Linux-safe)
         working-directory: frontend
         run: npm install --omit=optional
 
