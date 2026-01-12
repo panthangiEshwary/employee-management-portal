@@ -1,14 +1,25 @@
+# ---------- Build Angular ----------
 FROM node:20-alpine AS build
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install --omit=optional --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 
 COPY . .
 RUN npx ng build --configuration production
 
+# ---------- Serve with NGINX ----------
 FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
+
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# ✅ Copy ALL build output (NO project-name guessing)
+COPY --from=build /app/dist/ /usr/share/nginx/html/
 
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
