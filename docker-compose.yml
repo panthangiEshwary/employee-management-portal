@@ -24,14 +24,16 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/employee_db
       SPRING_DATASOURCE_USERNAME: employee_user
-      SPRING_DATASOURCE_PASSWORD: employee@123
+      SPRING_DATASOURCE_PASSWORD: employee123
     ports:
       - "8080:8080"
     networks:
       - app-net
 
   frontend:
-    image: ghcr.io/panthangieshwary/employee-frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: employee-frontend
     restart: always
     depends_on:
